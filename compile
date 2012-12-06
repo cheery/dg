@@ -1,0 +1,12 @@
+#!/bin/sh
+
+CFLAGS="-I./include/ -I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -pthread"
+LDFLAGS="-L/opt/vc/lib/"
+
+COMPILE="gcc $CFLAGS $LDFLAGS"
+
+$COMPILE -g -shared src/dg.c -o libdg.so -lEGL -lGLESv2 -lbcm_host
+
+mkdir -p bin
+$COMPILE test/print_resolution_brcm.c libdg.so -o bin/print_resolution_brcm
+$COMPILE test/fullscreen_brcm.c libdg.so -o bin/fullscreen_brcm
