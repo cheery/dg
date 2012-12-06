@@ -411,3 +411,28 @@ dg_surface dgCreateFullscreenSurfaceBRCM(dg_display_brcm display, int x, int y, 
 void dgUpdateFullscreenSurfaceBRCM(dg_surface surface, int x, int y, int width, int height, int layer)
 {
 }
+
+// This belongs into different library, but would be inconvenient there. It's a hack.
+//
+#include <GLES2/gl2.h>
+
+void glTextureSourceDG(long target, char id[DG_SURFACE_ID_LENGTH])
+{
+    dg_globals* g = dgGlobals();
+    int* gi = (int*)id;
+
+    if (eglQueryGlobalImageBRCM(gi, gi+2)) {
+        // this should set an opengl error instead.
+        return;
+    }
+    
+    EGLImageKHR image = (EGLImageKHR)eglCreateImageKHR(g->egldisplay, EGL_NO_CONTEXT, EGL_NATIVE_PIXMAP_KHR, (EGLClientBuffer)gi, NULL);
+    if (image == EGL_NO_IMAGE_KHR) {
+        // should too set an opengl error instead.
+        return;
+    }
+
+    glEGLImageTargetTexture2DOES(target, image);
+
+    eglDestroyImageKHR(g->egldisplay, image);
+}

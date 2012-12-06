@@ -44,3 +44,6 @@ int dgGetError();
 #define DG_SUCCESS 0
 #define DG_INVALID_ARGUMENT 1
 #define DG_BAD_ALLOC 2
+
+// Belongs into different API.
+void glTextureSourceDG(long target, char id[DG_SURFACE_ID_LENGTH]);
