@@ -2,11 +2,11 @@
  * 2012-11-20
  * first draft for 1.0
  */
-typedef struct dg_surface* dg_surface;
-typedef struct dg_context* dg_context;
+typedef struct _dg_surface* dg_surface;
+typedef struct _dg_context* dg_context;
 
 // only on broadcom
-typedef struct dg_display_brcm* dg_display_brcm;
+typedef struct _dg_display_brcm* dg_display_brcm;
 
 #define DG_VERSION_MAJOR 1
 #define DG_VERSION_MINOR 0
@@ -46,4 +46,4 @@ int dgGetError();
 #define DG_BAD_ALLOC 2
 
 // Belongs into different API.
-void glTextureSourceDG(long target, char id[DG_SURFACE_ID_LENGTH]);
+void glTextureSourceDG(long target, const char id[DG_SURFACE_ID_LENGTH]);

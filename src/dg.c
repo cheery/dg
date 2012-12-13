@@ -9,7 +9,7 @@
 
 #define SHARED_SURFACE 1
 #define NATIVE_SURFACE 2
-struct dg_surface {
+struct _dg_surface {
     union {
         char id[DG_SURFACE_ID_LENGTH];
         int global_image[5];
@@ -20,7 +20,7 @@ struct dg_surface {
     EGLConfig eglconfig;
 };
 
-struct dg_context {
+struct _dg_context {
     int api;
     EGLContext eglcontext;
     EGLConfig eglconfig;
@@ -312,7 +312,7 @@ void dgDestroyContext(dg_context context)
 }
 
 // BRCM related extension
-struct dg_display_brcm {
+struct _dg_display_brcm {
     DISPMANX_DISPLAY_HANDLE_T   dmx_display;
     int                         resolution[2];
 };
@@ -416,7 +416,7 @@ void dgUpdateFullscreenSurfaceBRCM(dg_surface surface, int x, int y, int width, 
 //
 #include <GLES2/gl2.h>
 
-void glTextureSourceDG(long target, char id[DG_SURFACE_ID_LENGTH])
+void glTextureSourceDG(long target, const char id[DG_SURFACE_ID_LENGTH])
 {
     dg_globals* g = dgGlobals();
     int* gi = (int*)id;
