@@ -9,7 +9,7 @@ typedef struct _dg_context* dg_context;
 typedef struct _dg_display_brcm* dg_display_brcm;
 
 #define DG_VERSION_MAJOR 1
-#define DG_VERSION_MINOR 0
+#define DG_VERSION_MINOR 1
 const int* dgVersion();
 int dgValidVersion(int major, int minor);
 
@@ -35,6 +35,7 @@ void dgMakeCurrent(dg_surface draw, dg_surface read, dg_context context);
 void dgGetCurrent(dg_surface* draw, dg_surface* read, dg_context* context);
 
 dg_display_brcm dgOpenDisplayBRCM(int id);
+dg_surface dgCreateFullscreenSurfaceBRCM2(dg_display_brcm display, int srcwidth, int srcheight, int x, int y, int width, int height, int layer, int* attributes);
 dg_surface dgCreateFullscreenSurfaceBRCM(dg_display_brcm display, int x, int y, int width, int height, int layer, int* attributes);
 const int* dgFullscreenResolutionBRCM(dg_display_brcm display);
 void dgCloseDisplayBRCM(dg_display_brcm display);

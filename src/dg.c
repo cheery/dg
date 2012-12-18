@@ -361,6 +361,11 @@ const int* dgFullscreenResolutionBRCM(dg_display_brcm display)
 
 dg_surface dgCreateFullscreenSurfaceBRCM(dg_display_brcm display, int x, int y, int width, int height, int layer, int* attributes)
 {
+    return dgCreateFullscreenSurfaceBRCM2(display, width, height, x, y, width, height, layer, attributes);
+}
+
+dg_surface dgCreateFullscreenSurfaceBRCM2(dg_display_brcm display, int srcwidth, int srcheight, int x, int y, int width, int height, int layer, int* attributes)
+{
     if (display == 0) {
         dgSetError(DG_INVALID_ARGUMENT);
         return 0;
@@ -377,8 +382,8 @@ dg_surface dgCreateFullscreenSurfaceBRCM(dg_display_brcm display, int x, int y, 
 
     src_rect.x = 0;
     src_rect.y = 0;
-    src_rect.width = width << 16;
-    src_rect.height = height << 16;
+    src_rect.width = srcwidth << 16;
+    src_rect.height = srcheight << 16;
 
     update = vc_dispmanx_update_start( 0 );
     element = vc_dispmanx_element_add ( update, display->dmx_display,
@@ -390,8 +395,8 @@ dg_surface dgCreateFullscreenSurfaceBRCM(dg_display_brcm display, int x, int y, 
     dg_globals* g = dgGlobals();
     dg_surface surface = malloc(sizeof(*surface));
     surface->data.window.element = element;
-    surface->data.window.width = width;
-    surface->data.window.height = height;
+    surface->data.window.width = srcwidth;
+    surface->data.window.height = srcheight;
 
     surface->eglconfig = find_eglconfig(attributes);
     surface->eglsurface = eglCreateWindowSurface( g->egldisplay, surface->eglconfig, &surface->data.window, NULL );
