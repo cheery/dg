@@ -7,6 +7,8 @@
 
 #include <pthread.h>
 
+#include <assert.h>
+
 #define SHARED_SURFACE 1
 #define NATIVE_SURFACE 2
 struct _dg_surface {
@@ -84,7 +86,7 @@ int dgGetError()
 }
 
 // Allows everything to break gracefully at version mismatch
-static int version[] = {DG_VERSION_MAJOR, DG_VERSION_MINOR, 1};
+static int version[] = {DG_VERSION_MAJOR, DG_VERSION_MINOR, 2};
 
 const int* dgVersion()
 {
@@ -426,14 +428,16 @@ void glTextureSourceDG(long target, const char id[DG_SURFACE_ID_LENGTH])
     dg_globals* g = dgGlobals();
     int* gi = (int*)id;
 
-    if (eglQueryGlobalImageBRCM(gi, gi+2)) {
+    if (!eglQueryGlobalImageBRCM(gi, gi+2)) {
         // this should set an opengl error instead.
+        assert (0); // remove assert.h once removed..
         return;
     }
     
     EGLImageKHR image = (EGLImageKHR)eglCreateImageKHR(g->egldisplay, EGL_NO_CONTEXT, EGL_NATIVE_PIXMAP_KHR, (EGLClientBuffer)gi, NULL);
     if (image == EGL_NO_IMAGE_KHR) {
         // should too set an opengl error instead.
+        assert (0); // remove assert.h once removed..
         return;
     }
 

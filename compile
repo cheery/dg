@@ -10,3 +10,4 @@ $COMPILE -g -shared src/dg.c -o libdg.so -lEGL -lGLESv2 -lbcm_host
 mkdir -p bin
 $COMPILE test/print_resolution_brcm.c libdg.so -o bin/print_resolution_brcm
 $COMPILE test/fullscreen_brcm.c libdg.so -o bin/fullscreen_brcm
+$COMPILE test/surface_id.c libdg.so -o bin/surface_id
